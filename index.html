@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗器械法规知识库智能系统 | MedDevice Regulatory Intelligence</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">Rx</span>
+                <div class="logo-text">
+                    <h1>医疗器械法规知识库</h1>
+                    <span class="subtitle">MedDevice Regulatory Intelligence System</span>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-tab="search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    法规检索
+                </button>
+                <button class="nav-btn" data-tab="review">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    文档审核
+                </button>
+                <button class="nav-btn" data-tab="prompt">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg>
+                    提示词生成
+                </button>
+                <button class="nav-btn" data-tab="stats">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                    统计概览
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="app-main">
+        <!-- ========== 法规检索模块 ========== -->
+        <section id="tab-search" class="tab-content active">
+            <div class="search-bar-container">
+                <div class="search-bar">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" id="searchInput" placeholder="搜索法规名称、编号、关键词、内容..." class="search-input">
+                    <button id="clearSearch" class="clear-btn" style="display:none;">清除</button>
+                </div>
+                <div class="filter-row">
+                    <select id="filterRegion" class="filter-select">
+                        <option value="">全部地区</option>
+                        <option value="中国">中国</option>
+                        <option value="美国">美国</option>
+                        <option value="欧盟">欧盟</option>
+                        <option value="国际">国际标准</option>
+                        <option value="日本">日本</option>
+                        <option value="澳大利亚">澳大利亚</option>
+                        <option value="加拿大">加拿大</option>
+                        <option value="东盟">东盟</option>
+                    </select>
+                    <select id="filterCategory" class="filter-select">
+                        <option value="">全部类别</option>
+                        <option value="行政法规">行政法规</option>
+                        <option value="部门规章">部门规章</option>
+                        <option value="规范性文件">规范性文件</option>
+                        <option value="技术指导文件">技术指导文件</option>
+                        <option value="地方性法规">地方性法规</option>
+                        <option value="国际法规">国际法规</option>
+                        <option value="国际标准">国际标准</option>
+                        <option value="国际指南">国际指南</option>
+                    </select>
+                    <select id="filterStatus" class="filter-select">
+                        <option value="">全部状态</option>
+                        <option value="现行有效">现行有效</option>
+                        <option value="草案/征求意见中">草案/征求意见中</option>
+                        <option value="试点（已转为常态化）">试点转常态化</option>
+                        <option value="逐步实施中">逐步实施中</option>
+                        <option value="已被IMDRF取代（历史参考）">历史参考</option>
+                    </select>
+                    <div class="result-count">
+                        <span id="resultCount">0</span> 条法规
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快速分类标签 -->
+            <div class="quick-tags">
+                <button class="tag-btn active" data-tag="all">全部</button>
+                <button class="tag-btn" data-tag="注册">注册备案</button>
+                <button class="tag-btn" data-tag="生产">生产管理</button>
+                <button class="tag-btn" data-tag="临床试验">临床试验</button>
+                <button class="tag-btn" data-tag="质量">质量体系</button>
+                <button class="tag-btn" data-tag="风险">风险管理</button>
+                <button class="tag-btn" data-tag="不良事件">不良事件</button>
+                <button class="tag-btn" data-tag="说明书">说明书标签</button>
+                <button class="tag-btn" data-tag="软件">软件/AI</button>
+                <button class="tag-btn" data-tag="UDI">唯一标识</button>
+                <button class="tag-btn" data-tag="网络安全">网络安全</button>
+                <button class="tag-btn" data-tag="FDA">FDA</button>
+                <button class="tag-btn" data-tag="MDR">EU MDR</button>
+                <button class="tag-btn" data-tag="ISO">ISO标准</button>
+                <button class="tag-btn" data-tag="注册人制度">MAH制度</button>
+            </div>
+
+            <!-- 法规列表 -->
+            <div id="regulationList" class="regulation-list">
+                <!-- 动态生成 -->
+            </div>
+            <div id="noResults" class="no-results" style="display:none;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                <p>未找到匹配的法规</p>
+                <span>请尝试调整搜索条件或关键词</span>
+            </div>
+        </section>
+
+        <!-- ========== 文档审核模块 ========== -->
+        <section id="tab-review" class="tab-content">
+            <div class="review-container">
+                <div class="review-header">
+                    <h2>医疗器械文档智能审核</h2>
+                    <p>上传技术文件、说明书、临床评价报告等文档，系统将自动对照法规要求进行合规性审核</p>
+                </div>
+                <div class="review-upload-zone" id="uploadZone">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <p>拖拽文件到此处或点击上传</p>
+                    <span>支持 .txt / .md / .docx / .pdf 格式</span>
+                    <input type="file" id="fileInput" accept=".txt,.md,.docx,.pdf" style="display:none;">
+                </div>
+                <div class="review-content" id="reviewContent" style="display:none;">
+                    <div class="review-file-info">
+                        <span id="fileName"></span>
+                        <button id="removeFile" class="text-btn">移除</button>
+                    </div>
+                    <div class="review-text-area">
+                        <label>或直接粘贴文档内容：</label>
+                        <textarea id="docContent" placeholder="粘贴需要审核的文档内容..." rows="8"></textarea>
+                    </div>
+                    <div class="review-options">
+                        <label>选择审核标准：</label>
+                        <div class="checkbox-group" id="reviewStandards">
+                            <!-- 动态生成 -->
+                        </div>
+                    </div>
+                    <button id="startReview" class="primary-btn">开始审核</button>
+                    <div id="reviewResult" class="review-result" style="display:none;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== GPT提示词生成模块 ========== -->
+        <section id="tab-prompt" class="tab-content">
+            <div class="prompt-container">
+                <div class="prompt-header">
+                    <h2>专业GPT提示词生成器</h2>
+                    <p>系统将根据您选择的法规范围和应用场景，自动组装一个专业的医疗器械法规合规GPT提示词</p>
+                </div>
+                <div class="prompt-config">
+                    <div class="config-group">
+                        <label>1. 选择产品类型</label>
+                        <select id="productType" class="config-select">
+                            <option value="general">通用医疗器械</option>
+                            <option value="ivd">体外诊断试剂(IVD)</option>
+                            <option value="software">医疗器械软件(SaMD)</option>
+                            <option value="ai">人工智能医疗器械</option>
+                            <option value="implant">植入性医疗器械</option>
+                            <option value="custom">定制式医疗器械</option>
+                            <option value="consumable">医用耗材</option>
+                        </select>
+                    </div>
+                    <div class="config-group">
+                        <label>2. 选择目标市场</label>
+                        <div class="checkbox-group" id="targetMarkets">
+                            <label class="checkbox-label"><input type="checkbox" value="中国" checked> 中国(NMPA)</label>
+                            <label class="checkbox-label"><input type="checkbox" value="美国"> 美国(FDA)</label>
+                            <label class="checkbox-label"><input type="checkbox" value="欧盟"> 欧盟(MDR)</label>
+                            <label class="checkbox-label"><input type="checkbox" value="日本"> 日本(PMDA)</label>
+                            <label class="checkbox-label"><input type="checkbox" value="澳大利亚"> 澳大利亚(TGA)</label>
+                            <label class="checkbox-label"><input type="checkbox" value="加拿大"> 加拿大</label>
+                        </div>
+                    </div>
+                    <div class="config-group">
+                        <label>3. 选择风险等级</label>
+                        <select id="riskLevel" class="config-select">
+                            <option value="1">一类（低风险）</option>
+                            <option value="2" selected>二类（中风险）</option>
+                            <option value="3">三类（高风险）</option>
+                            <option value="all">全部</option>
+                        </select>
+                    </div>
+                    <div class="config-group">
+                        <label>4. 选择关注领域（可多选）</label>
+                        <div class="checkbox-group" id="focusAreas">
+                            <label class="checkbox-label"><input type="checkbox" value="注册申报" checked> 注册申报</label>
+                            <label class="checkbox-label"><input type="checkbox" value="质量体系" checked> 质量管理体系</label>
+                            <label class="checkbox-label"><input type="checkbox" value="临床试验"> 临床试验</label>
+                            <label class="checkbox-label"><input type="checkbox" value="风险管理" checked> 风险管理</label>
+                            <label class="checkbox-label"><input type="checkbox" value="说明书标签"> 说明书与标签</label>
+                            <label class="checkbox-label"><input type="checkbox" value="不良事件"> 不良事件监测</label>
+                            <label class="checkbox-label"><input type="checkbox" value="网络安全"> 网络安全</label>
+                            <label class="checkbox-label"><input type="checkbox" value="生物学评价"> 生物学评价</label>
+                            <label class="checkbox-label"><input type="checkbox" value="上市后监管"> 上市后监管</label>
+                            <label class="checkbox-label"><input type="checkbox" value="UDI"> UDI系统</label>
+                        </div>
+                    </div>
+                    <div class="config-group">
+                        <label>5. 选择提示词用途</label>
+                        <select id="promptPurpose" class="config-select">
+                            <option value="consultant">法规咨询顾问</option>
+                            <option value="reviewer">技术文件审核员</option>
+                            <option value="regulator">模拟监管检查</option>
+                            <option value="writer">技术文件撰写助手</option>
+                            <option value="auditor">QMS内审员</option>
+                            <option value="trainer">法规培训讲师</option>
+                        </select>
+                    </div>
+                    <div class="config-group">
+                        <label>6. 附加要求（可选）</label>
+                        <textarea id="additionalReq" placeholder="例如：重点关注有源植入器械的EMC测试要求..." rows="3"></textarea>
+                    </div>
+                    <button id="generatePrompt" class="primary-btn">生成专业提示词</button>
+                </div>
+                <div id="promptResult" class="prompt-result" style="display:none;">
+                    <div class="prompt-result-header">
+                        <h3>生成的GPT提示词</h3>
+                        <div class="prompt-actions">
+                            <button id="copyPrompt" class="secondary-btn">复制</button>
+                            <button id="downloadPrompt" class="secondary-btn">下载</button>
+                        </div>
+                    </div>
+                    <pre id="promptOutput" class="prompt-output"></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 统计概览模块 ========== -->
+        <section id="tab-stats" class="tab-content">
+            <div class="stats-container">
+                <div class="stats-header">
+                    <h2>法规库统计概览</h2>
+                </div>
+                <div class="stats-grid" id="statsGrid">
+                    <!-- 动态生成 -->
+                </div>
+                <div class="stats-charts">
+                    <div class="chart-card">
+                        <h3>按地区分布</h3>
+                        <div id="regionChart" class="bar-chart"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>按类别分布</h3>
+                        <div id="categoryChart" class="bar-chart"></div>
+                    </div>
+                </div>
+                <div class="stats-detail">
+                    <div class="chart-card full-width">
+                        <h3>法规覆盖领域热力图</h3>
+                        <div id="keywordHeatmap" class="keyword-heatmap"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 法规详情模态框 -->
+    <div id="detailModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 动态内容 -->
+            </div>
+            <div class="modal-footer">
+                <button id="downloadReg" class="primary-btn">下载法规全文</button>
+                <button onclick="closeModal()" class="secondary-btn">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast消息 -->
+    <div id="toast" class="toast" style="display:none;"></div>
+
+    <script src="data/cn_regulations.js"></script>
+    <script src="data/cn_local_regulations.js"></script>
+    <script src="data/intl_regulations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
